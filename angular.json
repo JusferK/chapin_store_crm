@@ -69,6 +69,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "chapin-store-crm:build",
+            "proxyConfig": "proxy-dev.config.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "chapin-store-crm:build:production"

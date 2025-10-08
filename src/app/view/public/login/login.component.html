@@ -1,0 +1,29 @@
+<main class="login-container">
+  <div class="floating-card">
+    <section class="padding image-style">
+      <img src="/icon/chapin_store.svg" alt="Logo" />
+    </section>
+    <section class="padding">
+      <form class="form-container">
+        <p-floatlabel>
+          <input pInputText id="over_label"  autocomplete="off" />
+          <label for="over_label">Usuario</label>
+        </p-floatlabel>
+        <p-floatlabel>
+          <p-password
+            [feedback]="false"
+            inputId="over_label"
+            [toggleMask]="true"
+            style="width: 100%"
+            class="p-password-input"
+          />
+          <label for="over_label">Contraseña</label>
+        </p-floatlabel>
+        <p-button
+          label="Iniciar sesion"
+          icon="pi pi-sign-in"
+        />
+      </form>
+    </section>
+  </div>
+</main>

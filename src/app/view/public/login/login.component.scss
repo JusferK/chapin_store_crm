@@ -1,0 +1,75 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.login-container {
+
+  width: 100%;
+  padding: 0 30rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .floating-card {
+    width: 100%;
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .6);
+
+    .padding {
+      padding: 20px;
+    }
+
+    .image-style {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      width: 100%;
+
+      ::ng-deep p-floatlabel.p-floatlabel.p-floatlabel-over > input{
+        width: 100% !important;
+      }
+
+      ::ng-deep p-button > button {
+        width: 100% !important;
+      }
+
+    }
+
+  }
+
+}
+
+::ng-deep .p-password-input > input {
+  width: 100% !important;
+}
+
+@media screen and (max-width: 1400px) {
+
+  .login-container {
+    padding: 0 15rem;
+
+    .floating-card {
+      padding: 10px;
+    }
+
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+
+  .login-container {
+    padding: 0 3rem;
+  }
+
+}
