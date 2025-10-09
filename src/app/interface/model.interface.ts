@@ -6,3 +6,7 @@ export interface Administrator {
 export type AdministratorData = Administrator & {
   jwt:                    string;
 };
+
+export type LogoutResponse = {
+  logout:                 boolean;
+};

@@ -10,6 +10,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { Ripple } from 'primeng/ripple';
 import { BadgeModule } from 'primeng/badge';
 import { Menubar } from 'primeng/menubar';
+import { PopoverModule } from 'primeng/popover';
 
 @NgModule({
   declarations: [],
@@ -24,6 +25,7 @@ import { Menubar } from 'primeng/menubar';
     Ripple,
     BadgeModule,
     Menubar,
+    PopoverModule,
   ],
   exports: [
     InputTextModule,
@@ -36,6 +38,7 @@ import { Menubar } from 'primeng/menubar';
     Ripple,
     BadgeModule,
     Menubar,
+    PopoverModule,
   ],
 })
 export class PrimengModule { }

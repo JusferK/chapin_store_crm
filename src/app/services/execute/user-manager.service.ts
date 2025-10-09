@@ -49,6 +49,10 @@ export class UserManagerService {
     return this.getAdminData?.jwt ?? '';
   }
 
+  getAvatarLabel(): string {
+    return this.getAdminData?.username.substring(0, 1).toUpperCase() ?? 'A';
+  }
+
   logout(): void {
     this._storageManagerService.clear();
     this.isUserAuthenticated.set(false);

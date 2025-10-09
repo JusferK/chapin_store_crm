@@ -5,6 +5,8 @@ import { LoginComponent } from './view/public/login/login.component';
 import { NotLoggedGuard } from './guards/not-logged.guard';
 import { LoggedGuard } from './guards/logged.guard';
 import { MenuListResolver } from './resolver/menu-list.resolver';
+import { ProfileComponent } from './view/private/profile/profile.component';
+import { WelcomeComponent } from './view/private/welcome/welcome.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'adminitrator',
+        path: 'administrator',
         loadChildren: () => import('./modules/administrator/administrator.module').then(module => module.AdministratorModule),
       },
       {
@@ -39,6 +41,14 @@ const routes: Routes = [
         path: 'security',
         loadChildren: () => import('./modules/security/security.module').then(module => module.SecurityModule),
       },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
+        path: '',
+        component: WelcomeComponent
+      }
     ]
   },
   {

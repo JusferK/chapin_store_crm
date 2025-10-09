@@ -1,6 +1,6 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../../../services/transactional/login.service';
+import { SessionService } from '../../../services/transactional/session.service';
 import { LoginResponse } from '../../../interface/api.interface';
 import { SpinnerService } from '../../../services/execute/spinner.service';
 import { catchError, finalize, Observable, Subscription, throwError, timer } from 'rxjs';
@@ -12,10 +12,10 @@ import { SessionManagerService } from '../../../services/execute/session-manager
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   private _formBuilder: FormBuilder = inject(FormBuilder);
-  private _loginApiService: LoginService = inject(LoginService);
+  private _loginApiService: SessionService = inject(SessionService);
   private _spinnerService: SpinnerService = inject(SpinnerService);
   private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
 
@@ -32,6 +32,10 @@ export class LoginComponent {
   });
 
   private subscriptions: WritableSignal<Subscription[]> = signal<Subscription[]>([]);
+
+  ngOnDestroy(): void {
+    this.unsubscribeAll();
+  }
 
   onSubmit(): void {
 
@@ -110,6 +114,10 @@ export class LoginComponent {
     this.updateErrorModalConfiguration('showErrorModal', false);
     this.simpleShow = false;
     this.resetForm();
+  }
+
+  private unsubscribeAll(): void {
+    this.subscriptions().forEach((subscription: Subscription): void => subscription.unsubscribe());
   }
 
 }

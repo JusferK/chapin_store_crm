@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { GeneralRoutes } from '../../enum/routes.enum';
 import { SpinnerService } from './spinner.service';
 import { LoginResponse } from '../../interface/api.interface';
+import { SessionService } from '../transactional/session.service';
+import { finalize, Observable, tap } from 'rxjs';
+import { LogoutResponse } from '../../interface/model.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,7 @@ export class SessionManagerService {
   private readonly _userManagerService: UserManagerService = inject(UserManagerService);
   private readonly _spinnerService: SpinnerService = inject(SpinnerService);
   private readonly _router: Router = inject(Router);
+  private readonly _sessionApiService: SessionService = inject(SessionService);
 
   evaluateSession(): void  {
 
@@ -33,6 +37,20 @@ export class SessionManagerService {
 
     this._spinnerService.show();
     this._router.navigate([GeneralRoutes.HOME]).finally((): void => this._spinnerService.hide());
+
+  }
+
+  logout(): Observable<LogoutResponse> {
+    this._spinnerService.show();
+
+    return this._sessionApiService.logout()
+      .pipe(
+        tap((): void => this._userManagerService.logout()),
+        finalize((): void => {
+          this._router.navigate([GeneralRoutes.LOGIN])
+            .finally((): void => this._spinnerService.hide());
+        }),
+      )
 
   }
 

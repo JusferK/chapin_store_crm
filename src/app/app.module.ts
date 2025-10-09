@@ -23,6 +23,8 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenHeaderInterceptor } from './interceptors/token-header.interceptor';
 import { MenuListResolver } from './resolver/menu-list.resolver';
+import { ProfileComponent } from './view/private/profile/profile.component';
+import { WelcomeComponent } from './view/private/welcome/welcome.component';
 
 const MiTema = definePreset(Lara, {
   semantic: {
@@ -47,6 +49,8 @@ const MiTema = definePreset(Lara, {
     AppComponent,
     MainFrameComponent,
     LoginComponent,
+    ProfileComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
