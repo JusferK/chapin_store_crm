@@ -1,1 +1,21 @@
 <router-outlet />
+<p-dialog
+  [modal]="true"
+  [visible]="showSpinner()"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [showHeader]="false"
+  [styleClass]="'custom-loading-dialog'"
+  [contentStyle]="{
+    'background': 'transparent',
+    'box-shadow': 'none !important',
+     'display': 'flex',
+     'justify-content': 'center'
+  }"
+>
+  <p-progressSpinner
+    ariaLabel="loading"
+    [ngClass]="['spinner-style']"
+  />
+</p-dialog>

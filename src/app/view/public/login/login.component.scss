@@ -49,14 +49,33 @@
 
 }
 
+::ng-deep .p-dialog-header {
+  position: absolute;
+  align-self: end;
+  padding: 0;
+}
+
+::ng-deep .p-dialog-content {
+  height: 100%;
+}
+
 ::ng-deep .p-password-input > input {
   width: 100% !important;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 2rem;
 }
 
 @media screen and (max-width: 1400px) {
 
   .login-container {
-    padding: 0 15rem;
+    padding: 0 10rem;
 
     .floating-card {
       padding: 10px;

@@ -28,3 +28,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+::ng-deep circle.p-progressspinner-circle {
+  stroke: blue !important;
+}

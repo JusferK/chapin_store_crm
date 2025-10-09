@@ -2,3 +2,30 @@
   height: 100vh !important;
   width: 100%;
 }
+
+::ng-deep .custom-loading-dialog {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .custom-loading-dialog .p-dialog-header {
+  display: none !important;
+}
+
+::ng-deep .custom-loading-dialog .p-dialog {
+  overflow: hidden !important;
+}
+
+.spinner-style {
+  z-index: 1000;
+  display: flex;
+  position: absolute;
+}
+
+::ng-deep .p-dialog {
+  border: 0 !important;
+}
+
+::ng-deep .p-progressspinner-circle {
+  stroke: #2596be !important;
+}

@@ -20,6 +20,8 @@ import Lara from '@primeng/themes/lara';
 import { definePreset } from '@primeuix/themes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 const MiTema = definePreset(Lara, {
   semantic: {
     primary: {
@@ -38,18 +40,18 @@ const MiTema = definePreset(Lara, {
   }
 });
 
-
 @NgModule({
   declarations: [
     AppComponent,
     MainFrameComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     PrimengModule,
+    ReactiveFormsModule,
   ],
   providers: [
     LoggedGuard,

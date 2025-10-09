@@ -11,8 +11,9 @@ import { Observable } from 'rxjs';
 export class PrefixInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
     if (!req.url.startsWith('http') && !req.url.startsWith('/service')) {
-      const apiReq = req.clone({ url: `/service${req.url}` });
+      const apiReq: HttpRequest<any> = req.clone({ url: `/service${req.url}` });
       return next.handle(apiReq);
     }
 
