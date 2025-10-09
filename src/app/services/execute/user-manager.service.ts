@@ -45,6 +45,10 @@ export class UserManagerService {
     this.isUserAuthenticated.set(true);
   }
 
+  getToken(): string {
+    return this.getAdminData?.jwt ?? '';
+  }
+
   logout(): void {
     this._storageManagerService.clear();
     this.isUserAuthenticated.set(false);

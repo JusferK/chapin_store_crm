@@ -21,6 +21,8 @@ import { definePreset } from '@primeuix/themes';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { TokenHeaderInterceptor } from './interceptors/token-header.interceptor';
+import { MenuListResolver } from './resolver/menu-list.resolver';
 
 const MiTema = definePreset(Lara, {
   semantic: {
@@ -70,6 +72,8 @@ const MiTema = definePreset(Lara, {
       }
     }),
     { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
+    MenuListResolver,
   ],
   bootstrap: [AppComponent]
 })

@@ -9,3 +9,11 @@ export interface LoginResponse {
   token:                string;
   data:                 Administrator;
 }
+
+export interface MenuListResponse {
+  routerLink:           string;
+  label:                string;
+  icon:                 string;
+  id:                   string;
+  items:                MenuListResponse[];
+}
