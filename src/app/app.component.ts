@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
   showSpinner: Signal<boolean> = computed((): boolean => this._spinnerService.getShowSpinner);
 
   ngOnInit(): void {
+    this.handleSession();
+  }
+
+  private handleSession(): void {
     this._sessionMangerService.evaluateSession();
   }
 

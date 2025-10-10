@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,10 @@ import { TokenHeaderInterceptor } from './interceptors/token-header.interceptor'
 import { MenuListResolver } from './resolver/menu-list.resolver';
 import { ProfileComponent } from './view/private/profile/profile.component';
 import { WelcomeComponent } from './view/private/welcome/welcome.component';
+import { SessionInitializerService } from './services/transactional/session-initializer.service';
+import { appInitializerFactory } from './initializer/app.initializer';
+import { ErrorModalComponent } from './components/error-modal/error-modal.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 const MiTema = definePreset(Lara, {
   semantic: {
@@ -51,6 +55,7 @@ const MiTema = definePreset(Lara, {
     LoginComponent,
     ProfileComponent,
     WelcomeComponent,
+    ErrorModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,8 @@ const MiTema = definePreset(Lara, {
     provideHttpClient(
       withInterceptorsFromDi()
     ),
+    SessionInitializerService,
+    DialogService,
     providePrimeNG({
       theme: {
         preset: MiTema,
@@ -75,9 +82,10 @@ const MiTema = definePreset(Lara, {
         }
       }
     }),
+    provideAppInitializer((): Promise<void> => appInitializerFactory(inject(SessionInitializerService))()),
+    MenuListResolver,
     { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
-    MenuListResolver,
   ],
   bootstrap: [AppComponent]
 })

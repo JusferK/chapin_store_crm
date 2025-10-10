@@ -3,8 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../../../services/transactional/session.service';
 import { LoginResponse } from '../../../interface/api.interface';
 import { SpinnerService } from '../../../services/execute/spinner.service';
-import { catchError, finalize, Observable, Subscription, throwError, timer } from 'rxjs';
+import { catchError, finalize, Observable, Subscription, throwError } from 'rxjs';
 import { SessionManagerService } from '../../../services/execute/session-manager.service';
+import { ModalService } from '../../../services/execute/modal.service';
+import { ErrorModalComponent } from '../../../components/error-modal/error-modal.component';
+import { MODAL_ERROR_DEFAULT } from '../../../settings/modals/modal-default-settings';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +21,7 @@ export class LoginComponent implements OnDestroy {
   private _loginApiService: SessionService = inject(SessionService);
   private _spinnerService: SpinnerService = inject(SpinnerService);
   private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
-
-  errorModalConfiguration: WritableSignal<{ showErrorModal: boolean, message: string }> = signal({
-    showErrorModal: false,
-    message: '',
-  });
-
-  simpleShow: boolean = false;
+  private _modalService: ModalService = inject(ModalService);
 
   loginForm: FormGroup = this._formBuilder.group({
     username: ['', [Validators.required]],
@@ -58,7 +55,7 @@ export class LoginComponent implements OnDestroy {
         next: (response: LoginResponse): void => this.handleResponse(response),
       });
 
-    this.addSubscriptions(subscription);
+    this.addSubscriptions([subscription]);
   }
 
   hasError(control: string, errorType: string): boolean {
@@ -70,7 +67,6 @@ export class LoginComponent implements OnDestroy {
   }
 
   closeModal(): void {
-    this.updateErrorModalConfiguration('showErrorModal', false);
     this.resetForm();
   }
 
@@ -80,40 +76,27 @@ export class LoginComponent implements OnDestroy {
 
   private handleError(error: any): void {
 
-    this.updateErrorModalConfiguration('message', error?.error?.message ?? 'Algo salio mal');
-    this.updateErrorModalConfiguration('showErrorModal', true);
-    this.simpleShow = true;
+    MODAL_ERROR_DEFAULT.data = { message: error?.error?.message ?? 'Algo salio mal' }
 
-    const subscription: Subscription = timer(4000)
-      .pipe(
-        finalize((): void => this.onTimeIsUp()),
-      )
-      .subscribe();
+    const { closed$, activateTimer } = this._modalService
+      .open({
+        component: ErrorModalComponent,
+        handler: (): void => this.closeModal(),
+        modalSettings: MODAL_ERROR_DEFAULT,
+        timerMs: 4000,
+      });
 
-    this.addSubscriptions(subscription);
+    const subscription: Subscription = activateTimer(), subscription2: Subscription = closed$.subscribe();
+
+    this.addSubscriptions([subscription, subscription2]);
   }
 
-  private updateErrorModalConfiguration(key: string, value: any): void {
-    this.errorModalConfiguration.update(prev => {
-      return {
-        ...prev,
-        [key]: value,
-      }
-    });
-  }
-
-  private addSubscriptions(value: Subscription): void {
-    this.subscriptions.update((prev: Subscription[]): Subscription[] => [...prev, value]);
+  private addSubscriptions(value: Subscription[]): void {
+    this.subscriptions.update((prev: Subscription[]): Subscription[] => [...prev, ...value]);
   }
 
   private resetForm(): void {
     this.loginForm.reset();
-  }
-
-  private onTimeIsUp(): void {
-    this.updateErrorModalConfiguration('showErrorModal', false);
-    this.simpleShow = false;
-    this.resetForm();
   }
 
   private unsubscribeAll(): void {

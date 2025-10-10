@@ -17,7 +17,7 @@ export class PrefixInterceptor implements HttpInterceptor {
       return next.handle(apiReq);
     }
 
-    return next.handle(req);
+    return next.handle(req.clone());
   }
 
 }
