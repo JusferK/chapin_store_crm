@@ -19,7 +19,6 @@ export class MainFrameComponent implements OnInit, OnDestroy {
   private _userManagerService: UserManagerService = inject(UserManagerService);
   private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
   private _router: Router = inject(Router);
-  private _utilService: UtilService = inject(UtilService);
 
   label: WritableSignal<string> = signal(this._userManagerService.getAvatarLabel());
 

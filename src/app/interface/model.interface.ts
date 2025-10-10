@@ -10,3 +10,11 @@ export type AdministratorData = Administrator & {
 export type LogoutResponse = {
   logout:                 boolean;
 };
+
+export interface IProduct {
+  description:              string;
+  productId?:               number;
+  price:                    number;
+  image:                    string;
+  name:                     string;
+}

@@ -29,3 +29,7 @@
 ::ng-deep .p-progressspinner-circle {
   stroke: #2596be !important;
 }
+
+::ng-deep ul#null {
+  z-index: 1000;
+}

@@ -1,1 +1,86 @@
-<p>list works!</p>
+<p-table
+  [value]="products()"
+  [tableStyle]="{ 'min-width': '60rem' }"
+  style="margin: 0 20px;"
+  showGridlines
+  [scrollable]="true"
+  scrollHeight="560px"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]"
+>
+  <ng-template #caption>
+    <div style="display: flex; width: 100%; justify-content: space-between">
+      <form>
+        <p-iconfield iconPosition="left" class="ml-auto">
+          <p-inputicon>
+            <i class="pi pi-search"></i>
+          </p-inputicon>
+          <input pInputText type="text" placeholder="Busca un producto" />
+        </p-iconfield>
+      </form>
+      <p-button
+        icon="pi pi-refresh"
+        [raised]="true"
+        rounded
+        variant="text"
+      />
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Descripcion</th>
+      <th>Precio</th>
+      <th>Imagen</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-product>
+    <tr>
+      <td>
+        <div
+          style="justify-self: center;"
+        >
+          {{ product.productId }}
+        </div>
+      </td>
+      <td>
+        <div
+          style="justify-self: center;"
+        >
+          {{ product.name }}
+        </div>
+      </td>
+      <td>
+        {{ product.description }}
+      </td>
+      <td>
+        <div
+          style="justify-self: center;"
+        >
+          {{ product.price | currency: 'Q' }}
+        </div>
+      </td>
+      <td>
+        <div
+          style="justify-self: center;"
+        >
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            style="height: 100px; width: 100px; object-fit: contain"
+          />
+        </div>
+      </td>
+      <td>
+        <div
+          style="justify-self: center;"
+        >
+          <p-button  label="Eliminar" severity="danger" />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

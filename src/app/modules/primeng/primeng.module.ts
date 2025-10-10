@@ -12,6 +12,9 @@ import { BadgeModule } from 'primeng/badge';
 import { Menubar } from 'primeng/menubar';
 import { PopoverModule } from 'primeng/popover';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [],
@@ -28,6 +31,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     Menubar,
     PopoverModule,
     SplitButtonModule,
+    TableModule,
+    IconField,
+    InputIcon,
   ],
   exports: [
     InputTextModule,
@@ -42,6 +48,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     Menubar,
     PopoverModule,
     SplitButtonModule,
+    TableModule,
+    IconField,
+    InputIcon,
   ],
 })
 export class PrimengModule { }
