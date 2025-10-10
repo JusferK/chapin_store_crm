@@ -11,6 +11,7 @@ import { Ripple } from 'primeng/ripple';
 import { BadgeModule } from 'primeng/badge';
 import { Menubar } from 'primeng/menubar';
 import { PopoverModule } from 'primeng/popover';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import { PopoverModule } from 'primeng/popover';
     BadgeModule,
     Menubar,
     PopoverModule,
+    SplitButtonModule,
   ],
   exports: [
     InputTextModule,
@@ -39,6 +41,7 @@ import { PopoverModule } from 'primeng/popover';
     BadgeModule,
     Menubar,
     PopoverModule,
+    SplitButtonModule,
   ],
 })
 export class PrimengModule { }

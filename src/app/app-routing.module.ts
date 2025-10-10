@@ -22,15 +22,15 @@ const routes: Routes = [
         loadChildren: () => import('./modules/administrator/administrator.module').then(module => module.AdministratorModule),
       },
       {
-        path: 'category',
+        path: 'categories',
         loadChildren: () => import('./modules/category/category.module').then(module => module.CategoryModule),
       },
       {
-        path: 'customer',
+        path: 'users',
         loadChildren: () => import('./modules/customer/customer.module').then(module => module.CustomerModule),
       },
       {
-        path: 'order',
+        path: 'orders',
         loadChildren: () => import('./modules/order/order.module').then(module => module.OrderModule),
       },
       {

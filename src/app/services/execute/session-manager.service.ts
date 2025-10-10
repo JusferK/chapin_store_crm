@@ -19,13 +19,8 @@ export class SessionManagerService {
   private readonly _sessionApiService: SessionService = inject(SessionService);
 
   evaluateSession(): void  {
-
     this._spinnerService.show();
     this._userManagerService.evaluateAuthentication();
-
-    if (this._userManagerService.isUserAuthenticated())
-      this._router.navigate([GeneralRoutes.HOME]).finally((): void => this._spinnerService.hide());
-
     this._spinnerService.hide();
   }
 
@@ -36,7 +31,8 @@ export class SessionManagerService {
     if (!this._userManagerService.isUserAuthenticated()) return;
 
     this._spinnerService.show();
-    this._router.navigate([GeneralRoutes.HOME]).finally((): void => this._spinnerService.hide());
+    this._router.navigate([GeneralRoutes.HOME])
+      .finally((): void => this._spinnerService.hide());
 
   }
 

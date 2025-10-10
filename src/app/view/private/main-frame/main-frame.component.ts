@@ -1,10 +1,11 @@
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UserManagerService } from '../../../services/execute/user-manager.service';
 import { SessionManagerService } from '../../../services/execute/session-manager.service';
-import { Subscription } from 'rxjs';
+import { debounce, debounceTime, filter, finalize, Subscription, tap } from 'rxjs';
 import { GeneralRoutes, PrivateRoutes } from '../../../enum/routes.enum';
+import { UtilService } from '../../../services/execute/util.service';
 
 @Component({
   selector: 'app-main-frame',
@@ -18,6 +19,7 @@ export class MainFrameComponent implements OnInit, OnDestroy {
   private _userManagerService: UserManagerService = inject(UserManagerService);
   private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
   private _router: Router = inject(Router);
+  private _utilService: UtilService = inject(UtilService);
 
   label: WritableSignal<string> = signal(this._userManagerService.getAvatarLabel());
 
