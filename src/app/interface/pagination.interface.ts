@@ -3,5 +3,5 @@ export interface Pagination<T> {
   totalPages:                   number;
   content:                      T;
   size:                         number;
-  page:                         string;
+  page:                         number;
 }

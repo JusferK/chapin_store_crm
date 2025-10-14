@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
+import { NgModule, provideAppInitializer, inject } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +29,9 @@ import { SessionInitializerService } from './services/transactional/session-init
 import { appInitializerFactory } from './initializer/app.initializer';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
+import { NgOptimizedImage } from '@angular/common';
+import { SummaryModalComponent } from './components/summary-modal/summary-modal.component';
 
 const MiTema = definePreset(Lara, {
   semantic: {
@@ -56,6 +59,8 @@ const MiTema = definePreset(Lara, {
     ProfileComponent,
     WelcomeComponent,
     ErrorModalComponent,
+    WarningModalComponent,
+    SummaryModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +68,7 @@ const MiTema = definePreset(Lara, {
     AppRoutingModule,
     PrimengModule,
     ReactiveFormsModule,
+    NgOptimizedImage,
   ],
   providers: [
     LoggedGuard,

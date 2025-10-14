@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddComponent } from './pages/add/add.component';
-import { EditComponent } from './pages/edit/edit.component';
+import { ProductFormComponent } from './pages/product-form/product-form.component';
 import { ListComponent } from './pages/list/list.component';
 import { ProductListResolver } from './resolver/product-list.resolver';
+import { ComponentInitializerResolver } from '../../resolver/component-initializer.resolver';
+import { IProduct } from '../../interface/model.interface';
+import { ProductComponentMode, ProductKeyDataNavigation } from './enum/product-module-data-key-navigation.interface';
+import { CategoryListResolver } from '../../resolver/category-list.resolver';
+import { ProductModuleNavigation } from './enum/product-module-navigation.interface';
 
 const routes: Routes = [
   {
@@ -15,11 +19,26 @@ const routes: Routes = [
   },
   {
     path: 'add',
-    component: AddComponent,
+    component: ProductFormComponent,
+    data: {
+      mode: ProductComponentMode.CREATE,
+    },
+    resolve: {
+      category: CategoryListResolver,
+    },
   },
   {
     path: 'edit',
-    component: EditComponent,
+    component: ProductFormComponent,
+    data: {
+      key: ProductKeyDataNavigation.PRODUCT_UPDATE_KEY,
+      mode: ProductComponentMode.EDIT,
+      redirectTo: ProductModuleNavigation.HOME,
+    },
+    resolve: {
+      category: CategoryListResolver,
+      product: ComponentInitializerResolver<IProduct>,
+    },
   },
   {
     path: '**',

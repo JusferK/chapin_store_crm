@@ -11,7 +11,8 @@ export class ErrorModalComponent {
 
   private config: DynamicDialogConfig = inject(DynamicDialogConfig);
 
-  message: WritableSignal<string> = signal(this.config.data.message);
-  title: WritableSignal<string> = signal(this.config.data.title ?? '¡Hubo un problema!');
+  message: WritableSignal<string> = signal(this.config.data?.message ?? 'Mensaje...');
+  title: WritableSignal<string> = signal(this.config.data?.title ?? '¡Hubo un problema!');
+  icon: WritableSignal<string> = signal(`pi ${this.config.data?.icon ?? 'pi-exclamation-triangle'}` );
 
 }

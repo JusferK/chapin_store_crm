@@ -16,5 +16,11 @@ export interface IProduct {
   productId?:               number;
   price:                    number;
   image:                    string;
+  stock:                    number;
   name:                     string;
+}
+export interface ICategory {
+  categoryId:           number;
+  name:                 string;
+  description:          string;
 }

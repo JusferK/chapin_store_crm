@@ -1,0 +1,20 @@
+<section class="modal-container">
+  <i [class]="icon()" style="font-size: 2.5rem; color: #2596be"></i>
+  <h3>{{ title() }}</h3>
+  <p>{{ message() }}</p>
+  <section>
+    @if (showCancelButton()) {
+      <p-button
+        label="Cancelar"
+        variant="text"
+        (click)="close()"
+      />
+    }
+    <p-button
+      [label]="acceptButtonConfiguration().label"
+      [variant]="acceptButtonConfiguration().variant"
+      [severity]="acceptButtonConfiguration().severity"
+      (click)="accept()"
+    />
+  </section>
+</section>

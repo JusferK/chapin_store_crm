@@ -5,9 +5,8 @@ import { LoginResponse } from '../../../interface/api.interface';
 import { SpinnerService } from '../../../services/execute/spinner.service';
 import { catchError, finalize, Observable, Subscription, throwError } from 'rxjs';
 import { SessionManagerService } from '../../../services/execute/session-manager.service';
-import { ModalService } from '../../../services/execute/modal.service';
-import { ErrorModalComponent } from '../../../components/error-modal/error-modal.component';
 import { MODAL_ERROR_DEFAULT } from '../../../settings/modals/modal-default-settings';
+import { ModalHandlerService } from '../../../services/execute/modal-handler.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent implements OnDestroy {
   private _loginApiService: SessionService = inject(SessionService);
   private _spinnerService: SpinnerService = inject(SpinnerService);
   private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
-  private _modalService: ModalService = inject(ModalService);
+  private _httpResponseHandler: ModalHandlerService = inject(ModalHandlerService);
 
   loginForm: FormGroup = this._formBuilder.group({
     username: ['', [Validators.required]],
@@ -66,25 +65,18 @@ export class LoginComponent implements OnDestroy {
     this.loginForm.get(control)?.markAsTouched();
   }
 
-  closeModal(): void {
-    this.resetForm();
-  }
-
   private handleResponse(response: LoginResponse): void {
     this._sessionManagerService.postLogin(response);
   }
 
   private handleError(error: any): void {
 
-    MODAL_ERROR_DEFAULT.data = { message: error?.error?.message ?? 'Algo salio mal' }
+    MODAL_ERROR_DEFAULT.data = {
+      message: error?.error?.message ?? 'Algo salio mal',
+      title: 'Credenciales Invalidas',
+    };
 
-    const { closed$, activateTimer } = this._modalService
-      .open({
-        component: ErrorModalComponent,
-        handler: (): void => this.closeModal(),
-        modalSettings: MODAL_ERROR_DEFAULT,
-        timerMs: 4000,
-      });
+    const { closed$, activateTimer } = this._httpResponseHandler.handleError({ modalSettings: MODAL_ERROR_DEFAULT, handler: (): void => this.resetForm() });
 
     const subscription: Subscription = activateTimer(), subscription2: Subscription = closed$.subscribe();
 

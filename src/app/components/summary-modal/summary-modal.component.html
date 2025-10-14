@@ -1,0 +1,42 @@
+<section class="main-container" style="display: flex; flex-direction: column; padding: 10px 0; gap: 25px">
+  <h1 style="text-align: center">{{ title() }}</h1>
+  <p-virtualscroller
+    [items]="data()" scrollHeight="flex"
+    styleClass="border border-surface p-virtualscroller-custom"
+    [style]="{ width: '100%', height: '350px', padding: '0 20px' }"
+  >
+    <ng-template #item let-item>
+      <p-fieldset
+        [legend]="item.key"
+        [toggleable]="true"
+      >
+        <div style="display: flex">
+          @if (item.old) {
+            <article>
+              <h3>Dato Antiguo</h3>
+              <span>{{ item.old }}</span>
+            </article>
+            <p-divider layout="vertical" />
+          }
+          <article>
+            <h3>Dato nuevo</h3>
+            <span>{{ item.new }}</span>
+          </article>
+        </div>
+      </p-fieldset>
+    </ng-template>
+  </p-virtualscroller>
+  <h2 style="text-align: center">¿Deseas continuar?</h2>
+  <div style="display: flex; gap: 1rem; flex-direction: row-reverse; align-self: center;">
+    <p-button
+      label="Aceptar"
+      severity="info"
+      (click)="accept()"
+    />
+    <p-button
+      label="Cancelar"
+      severity="danger"
+      (click)="close()"
+    />
+  </div>
+</section>

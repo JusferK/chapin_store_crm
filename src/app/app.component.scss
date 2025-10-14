@@ -1,6 +1,8 @@
 :host {
   height: 100vh !important;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 ::ng-deep .custom-loading-dialog {
@@ -32,4 +34,24 @@
 
 ::ng-deep ul#null {
   z-index: 1000;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 2rem;
+}
+
+
+::ng-deep .p-dialog-header {
+  position: absolute;
+  align-self: end;
+  padding: 0;
+}
+
+::ng-deep .p-dialog-content {
+  height: 100%;
 }

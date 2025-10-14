@@ -1,0 +1,102 @@
+<main class="main-container">
+  <section class="title-container">
+    <h3>{{ title() }}</h3>
+  </section>
+  <section class="form-container">
+    <form
+      [formGroup]="productForm"
+    >
+      <article class="bigger-form-container">
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="on_label"
+            autocomplete="off"
+            formControlName="name"
+          />
+          <label for="on_label">Nombre</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="on_label"
+            autocomplete="off"
+            formControlName="stock"
+          />
+          <label for="on_label">Stock</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="on_label"
+            autocomplete="off"
+            formControlName="price"
+          />
+          <label for="on_label">Precio</label>
+        </p-floatlabel>
+        <p-floatlabel class="w-full md:w-56" variant="on">
+          <p-select
+            inputId="on_label"
+            [options]="categoryOptions()"
+            optionLabel="name"
+            optionValue="code"
+            class="w-full"
+            formControlName="categoryId"
+          />
+          <label for="on_label">Categoria</label>
+        </p-floatlabel>
+        <p-floatlabel class="description-label" variant="on">
+          <textarea
+            pTextarea
+            id="over_label"
+            rows="5"
+            cols="30"
+            style="resize: none"
+            placeholder=" "
+            formControlName="description"
+          ></textarea>
+          <label for="on_label">Descripcion</label>
+        </p-floatlabel>
+      </article>
+      <article class="image-container">
+        <div
+          style="height: 80%"
+        >
+          <img
+            height="300px"
+            style="object-fit: contain; width: 100%; height: 100%;"
+            [src]="image()"
+            alt="'Imagen'"
+            (error)="imageErrorHandler()"
+            [ngClass]="{ 'image-shadow-box-container': !imageHasError() }"
+          >
+        </div>
+        <p-floatlabel variant="on">
+          <input
+            pInputText
+            id="on_label"
+            autocomplete= "off"
+            formControlName="image"
+          />
+          <label for="on_label">Imagen</label>
+        </p-floatlabel>
+      </article>
+    </form>
+  </section>
+  <section
+    class="submit-button-container"
+  >
+    <p-button
+      label="Regresar"
+      (click)="back()"
+      icon="pi pi-times"
+      severity="danger"
+    />
+    <p-button
+      label="Enviar"
+      (click)="onSubmit()"
+      icon="pi pi-send"
+    />
+  </section>
+</main>
+<p-toast />

@@ -24,7 +24,7 @@ export class ModalService {
 
     const closed$ = reference.onClose
       .pipe(
-        map(handler),
+        map((data?: any) => handler(data)),
     ) as Observable<T>;
 
     return { closed$, activateTimer };

@@ -1,4 +1,4 @@
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Observable, Subscription } from 'rxjs';
 
 export interface ModalArguments {
@@ -12,4 +12,10 @@ export interface ModalArguments {
 export interface ModalHandle<T = any> {
   closed$:                      Observable<T>;
   activateTimer:                () => Subscription;
+}
+
+export interface ISummary {
+  key:                  string;
+  old?:                 string;
+  new:                  string;
 }

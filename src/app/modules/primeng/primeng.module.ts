@@ -15,6 +15,12 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
+import { FloatLabel } from "primeng/floatlabel"
+import { Select } from 'primeng/select';
+import { ScrollerModule } from 'primeng/scroller';
+import { FieldsetModule } from 'primeng/fieldset';
+import { DividerModule } from 'primeng/divider';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -34,6 +40,12 @@ import { InputIcon } from 'primeng/inputicon';
     TableModule,
     IconField,
     InputIcon,
+    FloatLabel,
+    Select,
+    ScrollerModule,
+    FieldsetModule,
+    DividerModule,
+    ToastModule,
   ],
   exports: [
     InputTextModule,
@@ -51,6 +63,12 @@ import { InputIcon } from 'primeng/inputicon';
     TableModule,
     IconField,
     InputIcon,
+    FloatLabel,
+    Select,
+    ScrollerModule,
+    FieldsetModule,
+    DividerModule,
+    ToastModule,
   ],
 })
 export class PrimengModule { }
