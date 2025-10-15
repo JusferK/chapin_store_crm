@@ -24,4 +24,27 @@ export class SummaryModalComponent {
     this.modalRef.close(false);
   }
 
+  isImage(key: string): boolean {
+    return [
+      'image',
+      'picture',
+      'photo'
+    ].includes(key);
+  }
+
+  isCurrency(key: string): boolean {
+    return [
+      'price',
+      'money',
+      'currency',
+      'total',
+      'subtotal',
+    ].includes(key);
+  }
+
+  imageHasError(event: Event): void {
+    const element = event.target as HTMLImageElement;
+    element.src = '/icon/image_placeholder.svg';
+  }
+
 }

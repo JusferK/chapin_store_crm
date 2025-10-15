@@ -37,7 +37,7 @@ export class InputErrorManagerService {
         const minLength = formControl.errors?.['minlength'].requiredLength;
         const requiredLength = formControl.errors?.['minlength'].actualLength;
 
-        return `El tamaño minimmo del campo ${input} es ${requiredLength} y actualmente es de ${minLength}`;
+        return `El tamaño minimo del campo ${input} es ${requiredLength} y actualmente es de ${minLength}`;
       case 'required':
         return `El campo ${input} es requerido`;
       default:

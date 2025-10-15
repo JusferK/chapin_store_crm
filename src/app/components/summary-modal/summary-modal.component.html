@@ -7,20 +7,51 @@
   >
     <ng-template #item let-item>
       <p-fieldset
-        [legend]="item.key"
-        [toggleable]="true"
+        [legend]="item.key | titlecase"
       >
         <div style="display: flex">
           @if (item.old) {
             <article>
               <h3>Dato Antiguo</h3>
-              <span>{{ item.old }}</span>
+              @if (isImage(item.key)) {
+                <img
+                  [src]="item.old"
+                  alt="imagen"
+                  style="height: 100px; width: 100px; object-fit: contain"
+                  (error)="imageHasError($event)"
+                >
+              } @else {
+                @switch (true) {
+                  @case (isCurrency(item.key)) {
+                    <span>{{ item.old | currency: 'Q' }}</span>
+                  }
+                  @default {
+                    <span>{{ item.old }}</span>
+                  }
+                }
+              }
             </article>
             <p-divider layout="vertical" />
           }
           <article>
             <h3>Dato nuevo</h3>
-            <span>{{ item.new }}</span>
+            @if (isImage(item.key)) {
+              <img
+                [src]="item.new"
+                alt="imagen"
+                style="height: 100px; width: 100px; object-fit: contain"
+                (error)="imageHasError($event)"
+              >
+            } @else {
+              @switch (true) {
+                @case (isCurrency(item.key)) {
+                  <span>{{ item.new | currency: 'Q' }}</span>
+                }
+                @default {
+                  <span>{{ item.new }}</span>
+                }
+              }
+            }
           </article>
         </div>
       </p-fieldset>

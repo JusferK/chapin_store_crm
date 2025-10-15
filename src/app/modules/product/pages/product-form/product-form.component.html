@@ -35,30 +35,6 @@
               pInputText
               id="on_label"
               autocomplete="off"
-              formControlName="name"
-              [invalid]="hasError('name')"
-            />
-            <label for="on_label">Nombre</label>
-          </p-floatlabel>
-          <div
-            class="error-message-form-container"
-          >
-            @if (hasError('name')) {
-              <p-message
-                class="invalid-message"
-                severity="error"
-                size="small"
-                variant="simple"
-              >{{ getErrorMessage('name', 'nombre') }}</p-message>
-            }
-          </div>
-        </div>
-        <div>
-          <p-floatlabel variant="on">
-            <input
-              pInputText
-              id="on_label"
-              autocomplete="off"
               formControlName="stock"
               [imask]="numberMaskOptions"
               [unmask]="'typed'"
