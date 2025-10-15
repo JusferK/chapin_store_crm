@@ -2,7 +2,7 @@
   style="height: 83vh"
 >
   <p-table
-    [value]="productList()"
+    [value]="list()"
     [tableStyle]="{ 'min-width': '60rem' }"
     style="margin: 0 20px; height: 100%"
     showGridlines
@@ -10,10 +10,10 @@
     scrollHeight="flex"
     [paginator]="true"
     [rows]="20"
-    [rowsPerPageOptions]="[20]"
-    [totalRecords]="paginationProducts().totalElements"
-    [loading]="isLoading()"
     [first]="first()"
+    [rowsPerPageOptions]="[20]"
+    [totalRecords]="paginationCustomer().totalElements"
+    [loading]="isLoading()"
     [lazy]="true"
     (onLazyLoad)="handlePageChange($event)"
     [showCurrentPageReport]="true"
@@ -22,7 +22,7 @@
     <ng-template #caption>
       <div style="display: flex; width: 100%; justify-content: space-between">
         <form
-          [formGroup]="searchProductForm"
+          [formGroup]="searchCustomerForm"
         >
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon>
@@ -31,8 +31,9 @@
             <input
               pInputText
               type="text"
-              placeholder="Busca un producto"
+              placeholder="Busca un cliente"
               formControlName="search"
+              [imask]="emailMask"
             />
           </p-iconfield>
         </form>
@@ -41,56 +42,55 @@
           [raised]="true"
           rounded
           variant="text"
-          (click)="onClick()"
+          (click)="onRefresh()"
         />
       </div>
     </ng-template>
     <ng-template #header>
       <tr>
-        <th>ID</th>
+        <th>Correo</th>
         <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Precio</th>
-        <th>Stock</th>
-        <th>Imagen</th>
-        <th></th>
+        <th>Apellido</th>
+        <th>Fecha de nacimiento</th>
+        <th>Fecha de registro</th>
+        <th>Foto de perfil</th>
         <th></th>
       </tr>
     </ng-template>
-    <ng-template #body let-product>
+    <ng-template #body let-customer>
       <tr>
         <td>
           <div
             style="justify-self: center;"
           >
-            {{ product.productId }}
+            {{ customer.email }}
           </div>
         </td>
         <td>
           <div
             style="justify-self: center;"
           >
-            {{ product.name }}
+            {{ customer.name }}
           </div>
         </td>
         <td>
-          {{ product.description }}
+          {{ customer.lastName }}
         </td>
         <td>
           <div
             style="justify-self: center;"
           >
-            {{ product.price | currency: 'Q' }}
+            {{ customer.dateOfBirth | date }}
           </div>
         </td>
-        <td style="justify-self: center;">{{ product.stock }}</td>
+        <td style="justify-self: center;">{{ customer.creationDate | date }}</td>
         <td>
           <div
             style="justify-self: center;"
           >
             <img
-              [src]="product.image"
-              [alt]="product.name"
+              [src]="customer.profilePhoto"
+              [alt]="customer.name"
               style="height: 100px; width: 100px; object-fit: contain"
               (error)="imageHasError($event)"
             />
@@ -101,20 +101,9 @@
             style="justify-self: center;"
           >
             <p-button
-              label="Actualizar"
-              severity="info"
-              (click)="update(product)"
-            />
-          </div>
-        </td>
-        <td>
-          <div
-            style="justify-self: center;"
-          >
-            <p-button
               label="Eliminar"
               severity="danger"
-              (click)="delete(product)"
+              (click)="delete(customer)"
             />
           </div>
         </td>

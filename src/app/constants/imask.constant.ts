@@ -22,3 +22,8 @@ export const iMaskPrice = {
   },
 };
 
+export const iMaskEmail = {
+  mask: /^\S*@?\S*$/,
+  lazy: false,
+  placeholderChar: '',
+};

@@ -51,10 +51,11 @@ export class ListComponent implements OnInit, OnDestroy {
   product: WritableSignal<IProduct | undefined> = signal<IProduct | undefined>(undefined);
   isLoading: WritableSignal<boolean> = signal<boolean>(false);
   firstTimeLoading: WritableSignal<boolean> = signal<boolean>(true);
+  first: WritableSignal<number> = signal<number>(0);
 
   subscriptions: WritableSignal<Subscription[]> = signal<Subscription[]>([]);
 
-  value: WritableSignal<IProduct[]> = linkedSignal<IProduct[]>((): IProduct[] => this.product() !== undefined ? [this.product()] as IProduct[] : this.products());
+  productList: WritableSignal<IProduct[]> = linkedSignal<IProduct[]>((): IProduct[] => this.product() !== undefined ? [this.product()] as IProduct[] : this.products());
 
   ngOnInit(): void {
     this.initializeProducts();
@@ -111,9 +112,12 @@ export class ListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.first() === first && !this.firstTimeLoading()) return;
+
     this.isLoading.set(true);
 
-    const currentPage: number = (first ?? 0) / this.paginationProducts().size;
+    const currentPage: number = Math.floor((first ?? 0) / 20);
+    this.first.set(first!);
 
     const subscription: Subscription = this._productApiService.getAllProducts(currentPage)
       .pipe(
@@ -130,6 +134,11 @@ export class ListComponent implements OnInit, OnDestroy {
     });
 
     this.addSubscription(subscription);
+  }
+
+  imageHasError(event: Event): void {
+    const element = event.target as HTMLImageElement;
+    element.src = '/icon/image_placeholder.svg';
   }
 
   private initializeProducts(): void {
@@ -205,6 +214,7 @@ export class ListComponent implements OnInit, OnDestroy {
   private refresh(): void {
 
     this.isLoading.set(true);
+    this.first.set(0);
 
     const subscription: Subscription = this._productApiService.getAllProducts()
       .pipe(

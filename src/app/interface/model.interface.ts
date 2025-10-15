@@ -1,3 +1,5 @@
+import { Country, Department } from '../enum/model.enum';
+
 export interface Administrator {
   username:               string;
   isActive:               boolean;
@@ -19,8 +21,27 @@ export interface IProduct {
   stock:                    number;
   name:                     string;
 }
+
 export interface ICategory {
   categoryId?:           number;
   name:                 string;
   description:          string;
+}
+
+export interface ICustomer {
+  email:                 string;
+  name:                  string;
+  lastName:              string;
+  dateOfBirth:           Date;
+  profilePhoto:          string;
+  creationDate:          Date;
+  addresses:             IAddress[];
+}
+
+export interface IAddress {
+  street:                string;
+  house:                 string;
+  city:                  Department;
+  country:               Country;
+  neighborhood:          string;
 }
