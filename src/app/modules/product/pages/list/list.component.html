@@ -9,12 +9,14 @@
     [scrollable]="true"
     scrollHeight="flex"
     [paginator]="true"
-    [rows]="paginationProducts().size"
+    [rows]="20"
     [rowsPerPageOptions]="[20]"
     [totalRecords]="paginationProducts().totalElements"
     [loading]="isLoading()"
     [lazy]="true"
     (onLazyLoad)="handlePageChange($event)"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Estas viendo {first} al {last} de {totalRecords}"
   >
     <ng-template #caption>
       <div style="display: flex; width: 100%; justify-content: space-between">

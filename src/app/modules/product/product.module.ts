@@ -10,7 +10,8 @@ import { ProductListResolver } from './resolver/product-list.resolver';
 import { ComponentInitializerResolver } from '../../resolver/component-initializer.resolver';
 import { CategoryListResolver } from '../../resolver/category-list.resolver';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute } from '@angular/router';
+import { IMaskDirective } from "angular-imask";
+import { Textarea } from 'primeng/textarea';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { ActivatedRoute } from '@angular/router';
     PrimengModule,
     ReactiveFormsModule,
     NgOptimizedImage,
+    IMaskDirective,
+    Textarea,
   ],
   providers: [
     ProductListResolver,

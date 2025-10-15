@@ -1,7 +1,15 @@
-import { Component, inject, linkedSignal, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  linkedSignal,
+  OnDestroy,
+  OnInit,
+  signal,
+  WritableSignal
+} from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { ICategory, IProduct } from '../../../../interface/model.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductComponentMode } from '../../enum/product-module-data-key-navigation.interface';
 import { debounceTime, finalize, Subscription, timer } from 'rxjs';
 import { UtilService } from '../../../../services/execute/util.service';
@@ -13,6 +21,8 @@ import { SpinnerService } from '../../../../services/execute/spinner.service';
 import { ISelect } from '../../../../interface/prime-ng.interface';
 import { MapperService } from '../../../../services/execute/mapper.service';
 import { MessageService } from 'primeng/api';
+import { iMaskNumber, iMaskPrice } from '../../../../constants/imask.constant';
+import { InputErrorManagerService } from '../../../../services/execute/input-error-manager.service';
 
 
 @Component({
@@ -23,7 +33,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
 
-  private _formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly _formBuilder: FormBuilder = inject(FormBuilder);
 
   private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly _utilService: UtilService = inject(UtilService);
@@ -33,6 +43,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   private readonly _spinnerService: SpinnerService = inject(SpinnerService);
   private readonly _mapperService: MapperService = inject(MapperService);
   private readonly _primengMessageService: MessageService = inject(MessageService);
+  private readonly _inputErrorManagerService: InputErrorManagerService = inject(InputErrorManagerService);
 
   private product?: WritableSignal<IProduct>;
   image: WritableSignal<string> = signal<string>('/icon/image_placeholder.svg');
@@ -51,14 +62,17 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     );
   });
 
+  priceMaskOptions = iMaskPrice;
+  numberMaskOptions = iMaskNumber;
+
   productForm: FormGroup = this._formBuilder.group({
-    categoryId: ['', Validators.required],
-    description: ['', Validators.required],
-    image: ['', Validators.required],
-    name: ['', Validators.required],
-    price: ['', Validators.required],
-    stock: ['', Validators.required],
-    productId: ['', Validators.required],
+    categoryId: ['', [Validators.required]],
+    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(150)]],
+    image: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(45)]],
+    price: ['', [Validators.required]],
+    stock: ['', [Validators.required]],
+    productId: ['', [Validators.required]],
   });
 
   ngOnInit(): void {
@@ -76,7 +90,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
 
-    if (this.productForm.invalid) return;
+    if (this.productForm.invalid) {
+      this.productForm.markAllAsTouched();
+      return;
+    }
 
     if (this.componentMode() === ProductComponentMode.EDIT) {
       this.validateBody();
@@ -90,6 +107,18 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   back(): void {
     this._router.navigate([ProductModuleNavigation.HOME])
       .finally((): void => {});
+  }
+
+  getErrorMessage(control: string, visualizeControl: string): string | undefined {
+
+    const getControl = this.productForm.get(control) as FormControl;
+
+    return this._inputErrorManagerService.handler(getControl, visualizeControl);
+  }
+
+  hasError(control: string): boolean {
+    const getControl = this.productForm.get(control) as FormControl;
+    return getControl.invalid && getControl.touched;
   }
 
   private initializeComponent(): void {
@@ -254,8 +283,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   private successAdditionHandler(data: IProduct): void {
-    this.successHandler('Producto guardado', `Se ha registrado el product con el id ${data.productId}`, 10000);
-    const subscription2: Subscription = timer(3000)
+    this.successHandler('Producto guardado', `Se ha registrado el product con el id ${data.productId}`, 3000);
+    const subscription2: Subscription = timer(4000)
       .subscribe({
         next: (): void => {
           this._router.navigate([ProductModuleNavigation.HOME])

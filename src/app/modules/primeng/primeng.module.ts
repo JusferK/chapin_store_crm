@@ -21,6 +21,8 @@ import { ScrollerModule } from 'primeng/scroller';
 import { FieldsetModule } from 'primeng/fieldset';
 import { DividerModule } from 'primeng/divider';
 import { ToastModule } from 'primeng/toast';
+import { MessageModule } from 'primeng/message';
+import { Textarea } from 'primeng/textarea';
 
 @NgModule({
   declarations: [],
@@ -46,6 +48,8 @@ import { ToastModule } from 'primeng/toast';
     FieldsetModule,
     DividerModule,
     ToastModule,
+    MessageModule,
+    Textarea,
   ],
   exports: [
     InputTextModule,
@@ -69,6 +73,8 @@ import { ToastModule } from 'primeng/toast';
     FieldsetModule,
     DividerModule,
     ToastModule,
+    MessageModule,
+    Textarea,
   ],
 })
 export class PrimengModule { }

@@ -7,45 +7,130 @@
       [formGroup]="productForm"
     >
       <article class="bigger-form-container">
-        <p-floatlabel variant="on">
-          <input
-            pInputText
-            id="on_label"
-            autocomplete="off"
-            formControlName="name"
-          />
-          <label for="on_label">Nombre</label>
-        </p-floatlabel>
-        <p-floatlabel variant="on">
-          <input
-            pInputText
-            id="on_label"
-            autocomplete="off"
-            formControlName="stock"
-          />
-          <label for="on_label">Stock</label>
-        </p-floatlabel>
-        <p-floatlabel variant="on">
-          <input
-            pInputText
-            id="on_label"
-            autocomplete="off"
-            formControlName="price"
-          />
-          <label for="on_label">Precio</label>
-        </p-floatlabel>
-        <p-floatlabel class="w-full md:w-56" variant="on">
-          <p-select
-            inputId="on_label"
-            [options]="categoryOptions()"
-            optionLabel="name"
-            optionValue="code"
-            class="w-full"
-            formControlName="categoryId"
-          />
-          <label for="on_label">Categoria</label>
-        </p-floatlabel>
-        <p-floatlabel class="description-label" variant="on">
+        <div>
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              autocomplete="off"
+              formControlName="name"
+              [invalid]="hasError('name')"
+            />
+            <label for="on_label">Nombre</label>
+          </p-floatlabel>
+          <div class="error-message-form-container">
+            @if (hasError('name')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('name', 'nombre') }}</p-message>
+            }
+          </div>
+        </div>
+        <div>
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              autocomplete="off"
+              formControlName="name"
+              [invalid]="hasError('name')"
+            />
+            <label for="on_label">Nombre</label>
+          </p-floatlabel>
+          <div
+            class="error-message-form-container"
+          >
+            @if (hasError('name')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('name', 'nombre') }}</p-message>
+            }
+          </div>
+        </div>
+        <div>
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              autocomplete="off"
+              formControlName="stock"
+              [imask]="numberMaskOptions"
+              [unmask]="'typed'"
+              [invalid]="hasError('stock')"
+            />
+            <label for="on_label">Stock</label>
+          </p-floatlabel>
+          <div
+            class="error-message-form-container"
+          >
+            @if (hasError('stock')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('stock', 'stock') }}</p-message>
+            }
+          </div>
+        </div>
+        <div>
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              autocomplete="off"
+              formControlName="price"
+              [imask]="priceMaskOptions"
+              [unmask]="'typed'"
+              [invalid]="hasError('price')"
+            />
+            <label for="on_label">Precio</label>
+          </p-floatlabel>
+          <div
+            class="error-message-form-container"
+          >
+            @if (hasError('price')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('price', 'precio') }}</p-message>
+            }
+          </div>
+        </div>
+        <div>
+          <p-floatlabel class="w-full md:w-56" variant="on">
+            <p-select
+              inputId="on_label"
+              [options]="categoryOptions()"
+              optionLabel="name"
+              optionValue="code"
+              class="w-full"
+              formControlName="categoryId"
+              [invalid]="hasError('categoryId')"
+            />
+            <label for="on_label">Categoria</label>
+          </p-floatlabel>
+          <div class="error-message-form-container">
+            @if (hasError('categoryId')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('categoryId', 'categoria') }}</p-message>
+            }
+          </div>
+        </div>
+        <div>
+          <p-floatlabel class="description-label" variant="on">
           <textarea
             pTextarea
             id="over_label"
@@ -54,9 +139,23 @@
             style="resize: none"
             placeholder=" "
             formControlName="description"
+            [invalid]="hasError('description')"
           ></textarea>
-          <label for="on_label">Descripcion</label>
-        </p-floatlabel>
+            <label for="on_label">Descripcion</label>
+          </p-floatlabel>
+          <div
+            class="error-message-form-container"
+          >
+            @if (hasError('description')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('description', 'descripcion') }}</p-message>
+            }
+          </div>
+        </div>
       </article>
       <article class="image-container">
         <div
@@ -71,15 +170,28 @@
             [ngClass]="{ 'image-shadow-box-container': !imageHasError() }"
           >
         </div>
-        <p-floatlabel variant="on">
-          <input
-            pInputText
-            id="on_label"
-            autocomplete= "off"
-            formControlName="image"
-          />
-          <label for="on_label">Imagen</label>
-        </p-floatlabel>
+        <div class="image-input-container">
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              autocomplete= "off"
+              formControlName="image"
+              [invalid]="hasError('image')"
+            />
+            <label for="on_label">Imagen</label>
+          </p-floatlabel>
+          <div class="error-message-container">
+            @if (hasError('image')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('image', 'Imagen') }}</p-message>
+            }
+          </div>
+        </div>
       </article>
     </form>
   </section>
