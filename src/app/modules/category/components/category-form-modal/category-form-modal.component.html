@@ -1,1 +1,74 @@
-<p>category-form-modal works!</p>
+<section class="main-modal-container">
+  <div>
+    <h3>{{ title() }}</h3>
+  </div>
+  <div class="form-main-container">
+    <form
+      [formGroup]="categoryForm"
+      (submit)="accept()"
+    >
+      <div class="input-container">
+        <p-floatlabel class="p-float-label">
+          <input
+            pInputText
+            id="value1"
+            [invalid]="hasError('name')"
+            autocomplete="off"
+            formControlName="name"
+            placeholder=" "
+          />
+          <label for="value1">Nombre</label>
+        </p-floatlabel>
+        <div style="height: 10px; padding: 5px 0 0 5px; align-self: start;">
+          @if (hasError('name')) {
+            <p-message
+              class="invalid-message"
+              severity="error"
+              size="small"
+              variant="simple"
+            >{{ getErrorMessage('name', 'nombre') }}</p-message>
+          }
+        </div>
+      </div>
+      <div class="input-container">
+        <p-floatlabel variant="on">
+          <textarea
+            pTextarea
+            id="over_label"
+            rows="5"
+            cols="30"
+            style="resize: none"
+            class="h-full"
+            [invalid]="hasError('description')"
+            formControlName="description"
+          ></textarea>
+          <label for="on_label">Descripcion</label>
+        </p-floatlabel>
+        <div style="height: 10px; padding: 5px 0 0 5px; align-self: start;">
+          @if (hasError('description')) {
+            <p-message
+              class="invalid-message"
+              severity="error"
+              size="small"
+              variant="simple"
+            >{{ getErrorMessage('description', 'descripcion') }}</p-message>
+          }
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <p-button
+          [label]="getFirstButtonConfig.label"
+          [raised]="getFirstButtonConfig.raised"
+          [severity]="getFirstButtonConfig.severity"
+          (click)="cancel()"
+        />
+        <p-button
+          [label]="getSecondButtonConfig.label"
+          [raised]="getSecondButtonConfig.raised"
+          [severity]="getSecondButtonConfig.severity"
+          type="submit"
+        />
+      </div>
+    </form>
+  </div>
+</section>

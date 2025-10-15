@@ -10,8 +10,8 @@ import { ISummary } from '../../interface/modal.interface';
 })
 export class SummaryModalComponent {
 
-  private modalRef: DynamicDialogRef<SummaryModalComponent> = inject(DynamicDialogRef);
-  private config: DynamicDialogConfig = inject(DynamicDialogConfig);
+  private readonly modalRef: DynamicDialogRef<SummaryModalComponent> = inject(DynamicDialogRef);
+  private readonly  config: DynamicDialogConfig = inject(DynamicDialogConfig);
 
   data: WritableSignal<ISummary[]> = signal<ISummary[]>(this.config.data?.summary ?? []);
   title: WritableSignal<string> = signal<string>(this.config.data?.title ?? 'Estos son los cambios realizados');

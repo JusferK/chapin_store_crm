@@ -20,7 +20,7 @@ export interface IProduct {
   name:                     string;
 }
 export interface ICategory {
-  categoryId:           number;
+  categoryId?:           number;
   name:                 string;
   description:          string;
 }

@@ -9,9 +9,7 @@ import { PrimengModule } from '../primeng/primeng.module';
 import { ProductListResolver } from './resolver/product-list.resolver';
 import { ComponentInitializerResolver } from '../../resolver/component-initializer.resolver';
 import { CategoryListResolver } from '../../resolver/category-list.resolver';
-import { MessageService } from 'primeng/api';
 import { IMaskDirective } from "angular-imask";
-import { Textarea } from 'primeng/textarea';
 
 @NgModule({
   declarations: [
@@ -25,13 +23,11 @@ import { Textarea } from 'primeng/textarea';
     ReactiveFormsModule,
     NgOptimizedImage,
     IMaskDirective,
-    Textarea,
   ],
   providers: [
     ProductListResolver,
     ComponentInitializerResolver,
     CategoryListResolver,
-    MessageService,
   ],
 })
 export class ProductModule { }

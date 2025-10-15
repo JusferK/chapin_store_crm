@@ -23,6 +23,7 @@ import { DividerModule } from 'primeng/divider';
 import { ToastModule } from 'primeng/toast';
 import { MessageModule } from 'primeng/message';
 import { Textarea } from 'primeng/textarea';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [],
@@ -76,5 +77,8 @@ import { Textarea } from 'primeng/textarea';
     MessageModule,
     Textarea,
   ],
+  providers: [
+    MessageService,
+  ]
 })
 export class PrimengModule { }

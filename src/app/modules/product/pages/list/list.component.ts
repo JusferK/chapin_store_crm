@@ -117,6 +117,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
     const subscription: Subscription = this._productApiService.getAllProducts(currentPage)
       .pipe(
+        catchError((error: any) => {
+          this.errorHandler('Hubo un fallo en la transaccion', error?.error?.message ?? 'Ha ocurrido un error, por favor intenta mas tarde.');
+          return throwError(() => error);
+        }),
         finalize((): void => {
           this.isLoading.set(false);
           if (forceUpdate) forceUpdate();
@@ -204,6 +208,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
     const subscription: Subscription = this._productApiService.getAllProducts()
       .pipe(
+        catchError((error: any) => {
+          this.errorHandler('Hubo un fallo en la transaccion', error?.error?.message ?? 'Ha ocurrido un error, por favor intenta mas tarde.');
+          return throwError(() => error);
+        }),
         finalize((): void => this.isLoading.set(false)),
       )
       .subscribe({
@@ -246,6 +254,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
     const subscription: Subscription = this._productApiService.remove(productId!)
       .pipe(
+        catchError((error: any) => {
+          this.errorHandler('Hubo un fallo en la transaccion', error?.error?.message ?? 'Ha ocurrido un error, por favor intenta mas tarde.');
+          return throwError(() => error);
+        }),
         finalize(() => this._spinnerService.hide()),
       )
       .subscribe({
@@ -265,7 +277,11 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   private successHandler(summary: string, detail: string, life: number = 4000): void {
-    this._primengMessageService.add({ severity: 'success', summary, detail, life: 4000 });
+    this._primengMessageService.add({ severity: 'success', summary, detail, life });
+  }
+
+  private errorHandler(summary: string, detail: string, life: number = 6000): void {
+    this._primengMessageService.add({ severity: 'error', summary, detail, life });
   }
 
 }

@@ -6,7 +6,6 @@ export interface ModalArguments {
   handler?:                      (data?: any) => void;
   component:                     any;
   timerMs?:                      number;
-  props?:                        any;
 }
 
 export interface ModalHandle<T = any> {

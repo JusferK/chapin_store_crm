@@ -1,0 +1,84 @@
+<main
+  style="height: 83vh"
+>
+  <p-table
+    [value]="categories()"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    style="margin: 0 20px; height: 100%"
+    showGridlines
+    [scrollable]="true"
+    scrollHeight="flex"
+  >
+    <ng-template #caption>
+      <div style="display: flex; width: 100%; justify-content: space-between">
+        <p-button
+          icon="pi pi-refresh"
+          [raised]="true"
+          rounded
+          variant="text"
+          (click)="onRefresh()"
+        />
+        <p-button
+          icon="pi pi-plus"
+          [raised]="true"
+          rounded
+          variant="text"
+          (click)="add()"
+        />
+      </div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-category>
+      <tr>
+        <td>
+          <div
+            style="justify-self: center;"
+          >
+            {{ category.categoryId }}
+          </div>
+        </td>
+        <td>
+          <div
+            style="justify-self: center; word-break: break-word"
+          >
+            {{ category.name }}
+          </div>
+        </td>
+        <td>
+          {{ category.description }}
+        </td>
+        <td>
+          <div
+            style="justify-self: center;"
+          >
+            <p-button
+              label="Actualizar"
+              severity="info"
+              (click)="update(category)"
+            />
+          </div>
+        </td>
+        <td>
+          <div
+            style="justify-self: center;"
+          >
+            <p-button
+              label="Eliminar"
+              severity="danger"
+              (click)="delete(category)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>
+<p-toast />

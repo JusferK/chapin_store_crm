@@ -117,8 +117,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   hasError(control: string): boolean {
-    const getControl = this.productForm.get(control) as FormControl;
-    return getControl.invalid && getControl.touched;
+    return this._inputErrorManagerService.hasError(this.productForm, control);
   }
 
   private initializeComponent(): void {
@@ -250,8 +249,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   private registerProduct(): void {
 
-    this._spinnerService.show();
-
     MODAL_SUMMARY_DEFAULT.data = {
       title: `Estas apunto de agregar este producto`
     };
@@ -269,6 +266,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   private add(): void {
+
+    this._spinnerService.show();
 
     const subscription: Subscription = this._productApiService.add(this.productForm.value)
       .pipe(

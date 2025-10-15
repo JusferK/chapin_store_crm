@@ -1,5 +1,5 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,11 @@ export class InputErrorManagerService {
     const error: string | undefined = this._errors().find((value: string): boolean => formControl.hasError(value));
 
     return this.getErrorMessage(formControl, input, error);
+  }
+
+  hasError(formGroup: FormGroup, controlProperty: string): boolean {
+    const control = formGroup.get(controlProperty) as FormControl;
+    return control.invalid && control.touched;
   }
 
   private getErrorMessage(formControl: FormControl, input: string, error?: string): string | undefined {

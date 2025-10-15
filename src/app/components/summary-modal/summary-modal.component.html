@@ -26,7 +26,7 @@
                     <span>{{ item.old | currency: 'Q' }}</span>
                   }
                   @default {
-                    <span>{{ item.old }}</span>
+                    <span style="word-break: break-word">{{ item.old }}</span>
                   }
                 }
               }
@@ -48,7 +48,7 @@
                   <span>{{ item.new | currency: 'Q' }}</span>
                 }
                 @default {
-                  <span>{{ item.new }}</span>
+                  <span style="word-break: break-word">{{ item.new }}</span>
                 }
               }
             }
