@@ -1,0 +1,230 @@
+<p-toast />
+<main
+  style="height: 83vh"
+>
+  <p-table
+    [value]="orders()"
+    dataKey="orderRequestId"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [expandedRowKeys]="expandedRows"
+    style="margin: 0 20px; height: 100%"
+    showGridlines
+    [scrollable]="true"
+    scrollHeight="flex"
+    [paginator]="true"
+    [rows]="11"
+    [rowsPerPageOptions]="[11]"
+    [totalRecords]="paginationOrder().totalElements"
+    [showCurrentPageReport]="true"
+    [first]="first()"
+    currentPageReportTemplate="Estas viendo {first} al {last} de {totalRecords}"
+    [lazy]="true"
+    (onLazyLoad)="handlePageChange($event)"
+  >
+    <ng-template #caption>
+      <div style="display: flex; width: 100%; justify-content: space-between">
+        <form
+          [formGroup]="orderForm"
+          style="width: 50%"
+        >
+          <p-iconfield
+            iconPosition="left"
+            class="ml-auto"
+            style="width: 100%"
+          >
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input
+              pInputText
+              type="text"
+              placeholder="Busca una orden por id, correo y fecha de entrega (fecha por el formato dd-mm-yyyy)"
+              formControlName="search"
+              style="width: 100%"
+            />
+          </p-iconfield>
+        </form>
+        <p-button
+          icon="pi pi-refresh"
+          [raised]="true"
+          rounded
+          variant="text"
+          (click)="refresh()"
+        />
+      </div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <th style="width: 5rem"></th>
+        <th>ID</th>
+        <th>Status</th>
+        <th>Fecha de orden</th>
+        <th>Fecha estimada de entrega</th>
+        <th>Direccion de entrega</th>
+        <th>Total</th>
+        <th>Ultimos 4 digitos</th>
+        <th>Titula de la tarjeta</th>
+        <th></th>
+        @if (isEditing()) {
+          <th></th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template
+      #body
+      let-order
+      let-expanded="expanded"
+      let-rowIndex="rowIndex"
+    >
+      <tr>
+        <td>
+          <p-button
+            type="button"
+            pRipple
+            [pRowToggler]="order"
+            [text]="true"
+            severity="secondary"
+            [rounded]="true"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          />
+        </td>
+        <td>{{ order.orderRequestId }}</td>
+        <td>
+          @if (isEditing() && editingIndex() === rowIndex) {
+            <form [formGroup]="updateOrderForm">
+              <p-select
+                [options]="options()"
+                optionLabel="label"
+                placeholder="Selecciona el estatus de la orden"
+                class="w-full md:w-56"
+                optionValue="value"
+                formControlName="status"
+              />
+            </form>
+          } @else {
+            <p-tag [value]="order.status | status" [severity]="getSeverity(order.status)" />
+          }
+        </td>
+        <td>{{ order.orderDate | date }}</td>
+        <td>{{ order.estimatedDeliveryDate | date }}</td>
+        <td style="word-break: break-word">{{ order.shippingAddress }}</td>
+        <td>{{ order.totalAmount | currency: 'Q' }}</td>
+        <td>{{ order.paymentInfo.lastFourDigits }}</td>
+        <td>{{ order.paymentInfo.cardHolder }}</td>
+        <td>
+          <div
+            style="justify-self: center;"
+          >
+            @if (isEditing() && rowIndex === editingIndex()) {
+              <p-button
+                label="Enviar"
+                severity="info"
+                icon="pi pi-send"
+                (click)="update()"
+              />
+            } @else {
+              <p-button
+                label="Actualizar"
+                severity="info"
+                (click)="updateStatus(order, rowIndex)"
+                [disabled]="isEditing() && editingIndex() !== rowIndex"
+              />
+            }
+          </div>
+        </td>
+        @if (isEditing() && rowIndex === editingIndex()) {
+          <td>
+            <div
+              style="justify-self: center;"
+            >
+              <p-button
+                label="Cancelar"
+                severity="danger"
+                (click)="cancelEdit()"
+              />
+            </div>
+          </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template #expandedrow let-order>
+      <tr>
+        <td colspan="10">
+          <div class="p-4">
+            <h5 style="margin-bottom: 5px;">Detalle para la orden {{ order.orderRequestId }}</h5>
+            <p-table [value]="order.orderDetail" dataKey="detailId">
+              <ng-template #header>
+                <tr>
+                  <th pSortableColumn="detailId">
+                    <div class="flex items-center gap-2">
+                      ID
+                      <p-sortIcon field="detailId" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="subtotal">
+                    <div class="flex items-center gap-2">
+                      Subtotal
+                      <p-sortIcon field="subtotal" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="quantity">
+                    <div class="flex items-center gap-2">
+                      Cantidad
+                      <p-sortIcon field="quantity" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="product.name">
+                    <div class="flex items-center gap-2">
+                      Nombre del producto
+                      <p-sortIcon field="product.price" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="product.price">
+                    <div class="flex items-center gap-2">
+                      Precio
+                      <p-sortIcon field="product.price" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="product.description">
+                    <div class="flex items-center gap-2">
+                      Descripcion
+                      <p-sortIcon field="product.description" />
+                    </div>
+                  </th>
+                  <th pSortableColumn="product.image">
+                    <div class="flex items-center gap-2">
+                      Imagen
+                      <p-sortIcon field="product.image" />
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-order>
+                <tr>
+                  <td>{{ order.detailId }}</td>
+                  <td>{{ order.subtotal }}</td>
+                  <td>{{ order.quantity }}</td>
+                  <td>{{ order.product.name  }}</td>
+                  <td>{{ order.product.price | currency: 'Q' }}</td>
+                  <td>{{ order.product.description  }}</td>
+                  <td>
+                    <div
+                      style="justify-self: center;"
+                    >
+                      <img
+                        [src]="order.product.image"
+                        [alt]="order.product.name"
+                        style="height: 75px; width: 75px; object-fit: contain"
+                        (error)="imageHasError($event)"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>

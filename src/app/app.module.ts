@@ -52,47 +52,47 @@ const MiTema = definePreset(Lara, {
 });
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainFrameComponent,
-    LoginComponent,
-    ProfileComponent,
-    WelcomeComponent,
-    ErrorModalComponent,
-    WarningModalComponent,
-    SummaryModalComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    PrimengModule,
-    ReactiveFormsModule,
-    NgOptimizedImage,
-  ],
-  providers: [
-    LoggedGuard,
-    NotLoggedGuard,
-    provideAnimationsAsync(),
-    provideAnimations(),
-    provideHttpClient(
-      withInterceptorsFromDi()
-    ),
-    SessionInitializerService,
-    DialogService,
-    providePrimeNG({
-      theme: {
-        preset: MiTema,
-        options: {
-          darkModeSelector: false,
-        }
-      }
-    }),
-    provideAppInitializer((): Promise<void> => appInitializerFactory(inject(SessionInitializerService))()),
-    MenuListResolver,
-    { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MainFrameComponent,
+        LoginComponent,
+        ProfileComponent,
+        WelcomeComponent,
+        ErrorModalComponent,
+        WarningModalComponent,
+        SummaryModalComponent,
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        PrimengModule,
+        ReactiveFormsModule,
+        NgOptimizedImage,
+    ],
+    providers: [
+        LoggedGuard,
+        NotLoggedGuard,
+        provideAnimationsAsync(),
+        provideAnimations(),
+        provideHttpClient(
+            withInterceptorsFromDi()
+        ),
+        SessionInitializerService,
+        DialogService,
+        providePrimeNG({
+            theme: {
+                preset: MiTema,
+                options: {
+                    darkModeSelector: false,
+                }
+            }
+        }),
+        provideAppInitializer((): Promise<void> => appInitializerFactory(inject(SessionInitializerService))()),
+        MenuListResolver,
+        { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

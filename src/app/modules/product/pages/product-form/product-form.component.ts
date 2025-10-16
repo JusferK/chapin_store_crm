@@ -297,7 +297,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   private successHandler(summary: string, detail: string, life: number = 4000): void {
-    this._primengMessageService.add({ severity: 'success', summary, detail, life: 4000 });
+    this._primengMessageService.add({ severity: 'success', summary, detail, life });
   }
 
 }

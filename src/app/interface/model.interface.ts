@@ -1,4 +1,4 @@
-import { Country, Department } from '../enum/model.enum';
+import { Country, Department, Status } from '../enum/model.enum';
 
 export interface Administrator {
   username:               string;
@@ -45,3 +45,28 @@ export interface IAddress {
   country:               Country;
   neighborhood:          string;
 }
+
+export interface IOrder {
+  orderRequestId:         number;
+  shippingAddress:        string;
+  totalAmount:            number;
+  status:                 Status;
+  estimatedDeliveryDate:  Date;
+  orderDate:              Date;
+  paymentInfo:            PaymentPublic;
+  orderDetail:            IDetail[];
+}
+
+export type PaymentPublic = {
+  cardHolder:             string;
+  lastFourDigits:         number;
+}
+
+export interface IDetail {
+  detailId:               number;
+  subtotal:               number;
+  quantity:               number;
+  product:                ProductSummary;
+}
+
+export type ProductSummary = Omit<IProduct, 'productId' | 'stock'>

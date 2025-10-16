@@ -25,3 +25,10 @@ export enum Department {
 export enum Country {
   GUATEMALA = 'GUATEMALA',
 }
+
+export enum Status {
+  DELIVERED = 'DELIVERED',
+  ON_ROUTE = 'ON_ROUTE',
+  PENDING = 'PENDING',
+  CANCELLED = 'CANCELLED',
+}

@@ -1,11 +1,10 @@
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserManagerService } from '../../../services/execute/user-manager.service';
 import { SessionManagerService } from '../../../services/execute/session-manager.service';
-import { debounce, debounceTime, filter, finalize, Subscription, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { GeneralRoutes, PrivateRoutes } from '../../../enum/routes.enum';
-import { UtilService } from '../../../services/execute/util.service';
 
 @Component({
   selector: 'app-main-frame',

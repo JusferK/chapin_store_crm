@@ -24,6 +24,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageModule } from 'primeng/message';
 import { Textarea } from 'primeng/textarea';
 import { MessageService } from 'primeng/api';
+import { TagModule } from 'primeng/tag';
 
 @NgModule({
   declarations: [],
@@ -51,6 +52,7 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     MessageModule,
     Textarea,
+    TagModule,
   ],
   exports: [
     InputTextModule,
@@ -76,6 +78,7 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     MessageModule,
     Textarea,
+    TagModule,
   ],
   providers: [
     MessageService,
