@@ -1,4 +1,4 @@
-import { Administrator } from './model.interface';
+import { IAdministrator } from './model.interface';
 
 export interface Login {
   username:             string;
@@ -7,7 +7,7 @@ export interface Login {
 
 export interface LoginResponse {
   token:                string;
-  data:                 Administrator;
+  data:                 IAdministrator;
 }
 
 export interface MenuListResponse {

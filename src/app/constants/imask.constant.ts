@@ -27,3 +27,11 @@ export const iMaskEmail = {
   lazy: false,
   placeholderChar: '',
 };
+
+export const iMaskUsername = {
+  mask: /^[a-zA-Z0-9._-]*$/,
+  lazy: false,
+  placeholderChar: '',
+  commit: (value: string): string => value.toLowerCase(),
+};
+

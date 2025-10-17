@@ -1,11 +1,11 @@
 import { Country, Department, Status } from '../enum/model.enum';
 
-export interface Administrator {
+export interface IAdministrator {
   username:               string;
   isActive:               boolean;
 }
 
-export type AdministratorData = Administrator & {
+export type AdministratorData = IAdministrator & {
   jwt:                    string;
 };
 
@@ -70,3 +70,8 @@ export interface IDetail {
 }
 
 export type ProductSummary = Omit<IProduct, 'productId' | 'stock'>
+
+export type RegisterAdministrator = Omit<IAdministrator, 'isActive'> & {
+  password:                 string;
+  role:                     string;
+}

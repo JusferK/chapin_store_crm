@@ -1,0 +1,95 @@
+<section class="main-modal-container">
+  <div>
+    <h3 style="text-align: center">{{ title() }}</h3>
+  </div>
+  <div class="form-main-container">
+    <form
+      [formGroup]="administratorForm"
+      (submit)="accept()"
+    >
+      @if (mode() === 'CREATE') {
+        <div class="input-container">
+          <p-floatlabel variant="on">
+            <input
+              fluid
+              pInputText
+              id="over_label"
+              [invalid]="hasError('username')"
+              formControlName="username"
+            />
+            <label for="on_label">Usuario</label>
+          </p-floatlabel>
+          <div style="height: 10px; padding: 5px 0 0 5px; align-self: start;">
+            @if (hasError('username')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('username', 'Usuario') }}</p-message>
+            }
+          </div>
+        </div>
+        <div class="input-container">
+          <p-select
+            [options]="options()"
+            optionLabel="label"
+            placeholder="Selecciona el rol del nuevo admin"
+            class="w-full md:w-56"
+            optionValue="value"
+            formControlName="role"
+            [invalid]="hasError('role')"
+            fluid
+          />
+          <div style="height: 10px; padding: 5px 0 0 5px; align-self: start;">
+            @if (hasError('role')) {
+              <p-message
+                class="invalid-message"
+                severity="error"
+                size="small"
+                variant="simple"
+              >{{ getErrorMessage('role', 'Role') }}</p-message>
+            }
+          </div>
+        </div>
+      }
+      <div class="input-container">
+        <p-floatlabel variant="on">
+          <p-password
+            fluid
+            id="value1"
+            [invalid]="hasError('password')"
+            autocomplete="off"
+            formControlName="password"
+            [toggleMask]="true"
+          />
+          <label for="value1">Contraseña</label>
+        </p-floatlabel>
+        <div style="height: 10px; padding: 5px 0 0 5px; align-self: start;">
+          @if (hasError('password')) {
+            <p-message
+              class="invalid-message"
+              severity="error"
+              size="small"
+              variant="simple"
+            >{{ getErrorMessage('password', 'contraseña') }}</p-message>
+          }
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <p-button
+          [label]="getFirstButtonConfig.label"
+          [raised]="getFirstButtonConfig.raised"
+          [severity]="getFirstButtonConfig.severity"
+          (click)="cancel()"
+        />
+        <p-button
+          [label]="getSecondButtonConfig.label"
+          [raised]="getSecondButtonConfig.raised"
+          [severity]="getSecondButtonConfig.severity"
+          type="submit"
+        />
+      </div>
+    </form>
+  </div>
+</section>
