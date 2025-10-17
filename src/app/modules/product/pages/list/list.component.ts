@@ -43,19 +43,19 @@ export class ListComponent implements OnInit, OnDestroy {
   private readonly _primengMessageService: MessageService = inject(MessageService);
 
   searchProductForm: FormGroup = this._formBuilder.group({
-    search: ['', [Validators.required]],
+    search: [''],
   });
 
   paginationProducts!: WritableSignal<Pagination<IProduct[]>>;
   products: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
-  product: WritableSignal<IProduct | undefined> = signal<IProduct | undefined>(undefined);
+  product: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(false);
   firstTimeLoading: WritableSignal<boolean> = signal<boolean>(true);
   first: WritableSignal<number> = signal<number>(0);
 
   subscriptions: WritableSignal<Subscription[]> = signal<Subscription[]>([]);
 
-  productList: WritableSignal<IProduct[]> = linkedSignal<IProduct[]>((): IProduct[] => this.product() !== undefined ? [this.product()] as IProduct[] : this.products());
+  productList: WritableSignal<IProduct[]> = linkedSignal<IProduct[]>((): IProduct[] => this.product().length > 0 ? this.product() : this.products());
 
   ngOnInit(): void {
     this.initializeProducts();
@@ -157,7 +157,7 @@ export class ListComponent implements OnInit, OnDestroy {
       .pipe(
         distinctUntilChanged(),
         map((value: string): string => {
-          if (value.trim() === '') this.product.set(undefined);
+          if (value.trim() === '') this.product.set([]);
           return value;
         }),
         debounceTime(900),
@@ -184,7 +184,7 @@ export class ListComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe({
-        next: (response: IProduct): void => {
+        next: (response: IProduct[]): void => {
           this.product.set(response);
           this.isLoading.set(false);
         },
@@ -201,7 +201,6 @@ export class ListComponent implements OnInit, OnDestroy {
     };
 
     this._modalHandlerService.handleError({ modalSettings: MODAL_ERROR_DEFAULT });
-    this.searchProductForm.reset();
   }
 
   private addSubscription(subscription: Subscription): void {

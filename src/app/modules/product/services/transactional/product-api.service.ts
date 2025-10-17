@@ -19,11 +19,9 @@ export class ProductApiService {
     return this._httpClient.get<Pagination<IProduct[]>>('/v1/product/get-all', { params });
   }
 
-  getProduct(value: string): Observable<IProduct> {
-    const params: HttpParams = new HttpParams()
-    .set('argument', value);
+  getProduct(argument: string): Observable<IProduct[]> {
 
-    return this._httpClient.get<IProduct>('/v1/product/get', { params });
+    return this._httpClient.post<IProduct[]>('/v1/product/get', { argument });
   }
 
   editProduct(body: IProduct): Observable<IProduct> {

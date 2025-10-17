@@ -23,6 +23,7 @@
       <div style="display: flex; width: 100%; justify-content: space-between">
         <form
           [formGroup]="searchProductForm"
+          style="width: 50%"
         >
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon>
@@ -31,8 +32,9 @@
             <input
               pInputText
               type="text"
-              placeholder="Busca un producto"
+              placeholder="Busca un producto por id, nombre o descripcion."
               formControlName="search"
+              style="width: 100%;"
             />
           </p-iconfield>
         </form>
