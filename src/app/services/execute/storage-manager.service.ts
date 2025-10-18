@@ -13,6 +13,10 @@ export class StorageManagerService {
     return JSON.parse(localStorage.getItem(key) ?? 'null') as T;
   }
 
+  remove(key: string): void {
+    localStorage.removeItem(key);
+  }
+
   clear(): void {
     localStorage.clear();
   }

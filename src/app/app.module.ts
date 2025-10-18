@@ -32,6 +32,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
 import { NgOptimizedImage } from '@angular/common';
 import { SummaryModalComponent } from './components/summary-modal/summary-modal.component';
+import { ResponseSessionInterceptor } from './interceptors/response-session.interceptor';
+import { UnavailableComponent } from './pages/unavailable/unavailable.component';
+import { NavigationGuard } from './guards/navigation.guard';
 
 const MiTema = definePreset(Lara, {
   semantic: {
@@ -61,6 +64,7 @@ const MiTema = definePreset(Lara, {
         ErrorModalComponent,
         WarningModalComponent,
         SummaryModalComponent,
+        UnavailableComponent,
     ],
     imports: [
         BrowserModule,
@@ -71,27 +75,29 @@ const MiTema = definePreset(Lara, {
         NgOptimizedImage,
     ],
     providers: [
-        LoggedGuard,
-        NotLoggedGuard,
-        provideAnimationsAsync(),
-        provideAnimations(),
-        provideHttpClient(
-            withInterceptorsFromDi()
-        ),
-        SessionInitializerService,
-        DialogService,
-        providePrimeNG({
-            theme: {
-                preset: MiTema,
-                options: {
-                    darkModeSelector: false,
-                }
-            }
-        }),
-        provideAppInitializer((): Promise<void> => appInitializerFactory(inject(SessionInitializerService))()),
-        MenuListResolver,
-        { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
+      LoggedGuard,
+      NotLoggedGuard,
+      NavigationGuard,
+      provideAnimationsAsync(),
+      provideAnimations(),
+      provideHttpClient(
+        withInterceptorsFromDi()
+      ),
+      SessionInitializerService,
+      provideAppInitializer((): Promise<void> => appInitializerFactory(inject(SessionInitializerService))()),
+      DialogService,
+      providePrimeNG({
+        theme: {
+          preset: MiTema,
+          options: {
+            darkModeSelector: false,
+          }
+        }
+      }),
+      MenuListResolver,
+      { provide: HTTP_INTERCEPTORS, useClass: PrefixInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: TokenHeaderInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: ResponseSessionInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

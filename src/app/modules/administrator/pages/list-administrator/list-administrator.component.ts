@@ -323,7 +323,7 @@ export class ListAdministratorComponent implements OnInit, OnDestroy {
 
     const { closed$ } = this._modalService.open({
       component: AdministratorFormComponent,
-      handler: ({ result, content }: { result: boolean, content: RegisterAdministrator | { password: string } | undefined }): void => this.handleEdit(result, content?.password ?? '', username),
+      handler: (data: { result: boolean, content: RegisterAdministrator | { password: string } | undefined }): void => this.handleEdit(data?.result, data?.content?.password ?? '', username),
       modalSettings,
     });
 
@@ -373,7 +373,7 @@ export class ListAdministratorComponent implements OnInit, OnDestroy {
 
     const { closed$ } = this._modalService.open({
       component: AdministratorFormComponent,
-      handler: ({ result, content }: { result: boolean, content: RegisterAdministrator | undefined }): void => this.handleAddition(result, content),
+      handler: (data: { result: boolean, content: RegisterAdministrator | undefined }): void => this.handleAddition(data?.result, data?.content),
       modalSettings,
     });
 

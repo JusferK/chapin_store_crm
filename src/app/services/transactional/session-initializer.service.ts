@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserManagerService } from '../execute/user-manager.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -36,11 +35,21 @@ export class SessionInitializerService {
           headers: { Authorization: `Bearer ${token}` },
         })
       );
-    } catch (error) {
-      console.error(error);
-      localStorage.clear();
-      this.setTokenWasExpired = true;
+    } catch (error: any) {
+
+      if (
+        (error?.error?.message === 'Token no valido para guardar.' && error?.error?.status === 409) ||
+        (error?.error?.message === 'Las credenciales han expirado, inicie sesion de nuevo por favor.' && error?.status === 401)
+      ) {
+        this.expiredSession();
+      }
+
     }
+  }
+
+  private expiredSession(): void {
+    localStorage.clear();
+    this.setTokenWasExpired = true;
   }
 
 }

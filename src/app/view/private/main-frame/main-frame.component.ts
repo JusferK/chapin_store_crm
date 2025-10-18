@@ -5,6 +5,7 @@ import { UserManagerService } from '../../../services/execute/user-manager.servi
 import { SessionManagerService } from '../../../services/execute/session-manager.service';
 import { Subscription } from 'rxjs';
 import { GeneralRoutes, PrivateRoutes } from '../../../enum/routes.enum';
+import { SpinnerService } from '../../../services/execute/spinner.service';
 
 @Component({
   selector: 'app-main-frame',
@@ -14,10 +15,11 @@ import { GeneralRoutes, PrivateRoutes } from '../../../enum/routes.enum';
 })
 export class MainFrameComponent implements OnInit, OnDestroy {
 
-  private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  private _userManagerService: UserManagerService = inject(UserManagerService);
-  private _sessionManagerService: SessionManagerService = inject(SessionManagerService);
-  private _router: Router = inject(Router);
+  private readonly _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private readonly _userManagerService: UserManagerService = inject(UserManagerService);
+  private readonly _sessionManagerService: SessionManagerService = inject(SessionManagerService);
+  private readonly _router: Router = inject(Router);
+  private readonly _spinnerService: SpinnerService = inject(SpinnerService);
 
   label: WritableSignal<string> = signal(this._userManagerService.getAvatarLabel());
 
@@ -43,8 +45,16 @@ export class MainFrameComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    const subscription: Subscription = this._sessionManagerService.logout()
-      .subscribe();
+
+    const subscription: Subscription = this._sessionManagerService.logout(false)
+      .subscribe({
+        next: (): void => {
+          this._userManagerService.logout();
+
+          this._router.navigate([GeneralRoutes.LOGIN])
+            .finally((): void => {});
+        }
+      });
 
     this.subscriptions.update((prev: Subscription[]): Subscription[] => [...prev, subscription]);
   }

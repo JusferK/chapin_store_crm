@@ -7,14 +7,17 @@ import { LoggedGuard } from './guards/logged.guard';
 import { MenuListResolver } from './resolver/menu-list.resolver';
 import { ProfileComponent } from './view/private/profile/profile.component';
 import { WelcomeComponent } from './view/private/welcome/welcome.component';
+import { NavigationGuard } from './guards/navigation.guard';
+import { UnavailableComponent } from './pages/unavailable/unavailable.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MainFrameComponent,
     canActivate: [LoggedGuard],
+    //canActivateChild: [NavigationGuard],
     resolve: {
-      menuList: MenuListResolver
+      menuList: MenuListResolver,
     },
     children: [
       {
@@ -55,6 +58,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [NotLoggedGuard],
+  },
+  {
+    path: 'not-available',
+    component: UnavailableComponent,
   },
   {
     path: '**',

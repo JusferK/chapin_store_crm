@@ -10,7 +10,7 @@ export class TokenHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (!this._userManagerService.isUserAuthenticated()) return next.handle(req);
+    if (!this._userManagerService.isUserAuthenticated() || req.url.includes('/logout')) return next.handle(req);
 
     const token: string = this._userManagerService.getToken();
 

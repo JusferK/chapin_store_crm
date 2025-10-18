@@ -22,7 +22,7 @@ export class ModalService {
         .subscribe((): void => reference.close());
     };
 
-    const closed$ = reference.onClose
+    const closed$ = reference?.onClose
       .pipe(
         map((data?: any) => handler(data)),
     ) as Observable<T>;
